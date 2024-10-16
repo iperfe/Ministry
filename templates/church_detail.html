@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block content %}
+<h2>{{ church.name }}</h2>
+<p>{{ church.description }}</p>
+<a href="{% url 'church_update' church.id %}">Edit</a>
+<a href="{% url 'church_delete' church.id %}">Delete</a>
+<a href="{% url 'contribution_list' church.id %}">View Contributions</a>
+<a href="{% url 'request_list' church.id %}">View Requests</a> {% endblock %}

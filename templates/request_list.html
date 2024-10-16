@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Requests for {{ church.name }}</h2>
+<a href="{% url 'request_create' church.id %}">Add New Request</a>
+<ul>
+    {% for request in requests %}
+    <li>
+        <a href="{% url 'request_update' request.id %}">{{ request.title }}</a>
+        <a href="{% url 'request_delete' request.id %}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
