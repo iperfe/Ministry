@@ -1,0 +1,134 @@
+ {% load custom_filters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 80%;
+            padding: 12px 16px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            margin: 0 auto;
+            /* Centering the input fields */
+        }
+        
+        input:focus {
+            border-color: #007bff;
+        }
+        
+        input::placeholder {
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        button {
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+            width: 80%;
+            /* Centering the button */
+            margin: 0 auto;
+            /* Centering the button */
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .login-link {
+            margin-top: 10px;
+        }
+        
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Login</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label }} {{ form.username|add_class:"form-control" }}
+
+                <!-- Assuming you have a way to add classes -->
+            </div>
+            <div class="form-group">
+                {{ form.password.label }} {{ form.password|add_class:"form-control" }}
+                <!-- Assuming you have a way to add classes -->
+            </div>
+            <button type="submit">Login</button>
+        </form>
+
+        {% if next %}
+        <p>You will be redirected to {{ next }} after logging in.</p>
+        {% endif %}
+
+        <div class="login-link">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

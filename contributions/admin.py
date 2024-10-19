@@ -1,6 +1,10 @@
 
 from django.contrib import admin
-from .models import Church, Contribution, Request, Donation
+from .models import Church, Contribution, Request, Donation,User
+from django.contrib import admin
+
+
+admin.site.register(User)
 
 @admin.register(Church)
 class ChurchAdmin(admin.ModelAdmin):

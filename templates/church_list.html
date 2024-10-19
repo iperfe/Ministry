@@ -1,13 +1,36 @@
 {% extends 'base.html' %} {% block content %}
-<h2>Churches</h2>
-<a href="{% url 'church_create' %}">Add New Church</a>
-<ul>
-    {% for church in churches %}
-    <li>
-        <a href="{% url 'church_detail' church.id %}">{{ church.name }}</a>
-        <a href="{% url 'church_update' church.id %}">Edit</a>
-        <a href="{% url 'delete_church' church.id %}" class="btn btn-danger " onclick="return confirm('Are you sure you want to delete this church?');">Delete</a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h2 class="mb-4">Churches</h2>
+    <a href="{% url 'create_church' %}" class="btn btn-primary mb-3">Add New Church</a>
+
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for church in churches %}
+            <tr>
+                <th scope="row">{{ church.pk }}</th>
+
+                <td>{{ church.name }}</td>
+                <td>{{ church.country }}</td>
+                <td>
+                    <a href="{% url 'church_detail' church.pk %}" class="btn btn-info btn-sm">View</a>
+                    <a href="{% url 'edit_church' church.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete_church' church.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this church?');">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No churches available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -124,8 +124,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/accounts/login/'  # Adjust this based on your login URL
+LOGIN_REDIRECT_URL = '/churches/'  # Redirect to the church list after logging in
+LOGOUT_REDIRECT_URL = '/login/'
+AUTH_USER_MODEL = 'contributions.User'

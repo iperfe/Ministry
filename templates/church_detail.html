@@ -1,7 +1,33 @@
 {% extends 'base.html' %} {% block content %}
-<h2>{{ church.name }}</h2>
-<p>{{ church.description }}</p>
-<a href="{% url 'church_update' church.id %}">Edit</a>
-<a href="{% url 'church_delete' church.id %}">Delete</a>
-<a href="{% url 'contribution_list' church.id %}">View Contributions</a>
-<a href="{% url 'request_list' church.id %}">View Requests</a> {% endblock %}
+<div class="container mt-4">
+    <h2 class="text-center">{{ church.name }}</h2>
+    <p class="text-muted text-center">{{ church.description }}</p>
+
+    <table class="table table-bordered mt-4">
+        <thead class="table-light">
+            <tr>
+                <th>Action</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Edit</td>
+                <td><a href="{% url 'edit_church' church.id %}" class="btn btn-warning">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Delete</td>
+                <td><a href="{% url 'delete_church' church.id %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            <tr>
+                <td>View Contributions</td>
+                <td><a href="{% url 'contribution_list' church.id %}" class="btn btn-primary">View Contributions</a></td>
+            </tr>
+            <tr>
+                <td>View Requests</td>
+                <td><a href="{% url 'request_list' church.id %}" class="btn btn-secondary">View Requests</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -3,17 +3,24 @@ from django.urls import path
 from . import views
 from .views import HomeView
 from django.views.generic import RedirectView
+from .views import register
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/churches/', permanent=False), name='home'),
      path('', HomeView.as_view(), name='home'),
+      path('churches/', RedirectView.as_view(url='/register/', permanent=False), name='home'),
     # Church URLs
     path('churches/', views.ChurchListView.as_view(), name='church_list'),
     path('churches/<int:pk>/', views.ChurchDetailView.as_view(), name='church_detail'),
-    path('churches/create/', views.ChurchCreateView.as_view(), name='church_create'),
-    path('churches/<int:pk>/update/', views.ChurchUpdateView.as_view(), name='church_update'),
-    path('churches/<int:pk>/delete/', views.ChurchDeleteView.as_view(), name='church_delete'),
-
+    
+    
+    
+    path('church/delete/<int:pk>/', views.delete_church, name='delete_church'),
+    path('churches/<int:pk>/edit/', views.EditChurchView.as_view(), name='edit_church'),
+    path('church/create/', views.ChurchCreateView.as_view(), name='create_church'),
+    path('register/', register, name='register'),
+    path('accounts/login/', views.CustomLoginView.as_view(), name='login'),  # Ensure this is present
+    path('logout/', views.LogoutView.as_view(), name='logout'),
     # Contribution URLs
     path('churches/<int:church_id>/contributions/', views.ContributionListView.as_view(), name='contribution_list'),
     path('churches/<int:church_id>/contributions/create/',views. ContributionCreateView.as_view(), name='contribution_create'),
@@ -33,7 +40,8 @@ urlpatterns = [
     path('donations/<int:pk>/delete/', views.DonationDeleteView.as_view(), name='donation_delete'),
     
     
-    path('church/delete/<int:pk>/', views.delete_church, name='delete_church'),
+    
+    
     ]
     
 

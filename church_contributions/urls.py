@@ -22,5 +22,5 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('contributions.urls')),  # Correctly include the app's URLs
-    
+    path('/churches/', include('contributions.urls')),
 ]

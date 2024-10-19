@@ -1,3 +1,5 @@
+ {% load static %} {% load custom_filters %}
+<!-- Load static files -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,18 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Church Contributions</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
     <header>
         <h1>Church Contributions System</h1>
         <nav>
-            <a href="{% url 'church_list' %}">Churches</a>
+            <nav>
+                {% if user.is_authenticated %}
+                <a href="{% url 'church_list' %}">Church List</a>
+                <a href="{% url 'login' %}">Logout</a> {% else %}
+                <a href="{% url 'login' %}">Login</a> {% endif %}
+            </nav>
         </nav>
     </header>
     <main>
         {% block content %} {% endblock %}
     </main>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -3,13 +3,38 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Church, Contribution, Request, Donation
 from .forms import ContributionForm, RequestForm, DonationForm, ChurchForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Church  # Import your Church model
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+from .models import User,Church
+from .forms import CustomUserCreationForm  # Create a custom form for registration
 
 
+
+def register(request):
+    churches = Church.objects.all()  # Fetch all churches to populate the dropdown
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password1'])  # Hash the password
+            user.save()
+            messages.success(request, 'Registration successful! You can now log in.')
+            return redirect('login')  # Redirect to login page
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form, 'churches': churches})
+
+
+
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'  # Specify your login template path
+    success_url = reverse_lazy('church_list')  # Where to redirect after login
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -21,9 +46,10 @@ class HomeView(TemplateView):
         pass
 
 class ChurchListView(ListView):
-    model = Church
-    template_name = 'church_list.html'
-    context_object_name = 'churches'
+   model = Church
+   template_name = 'church_list.html'
+   context_object_name = 'churches'
+
 
 
 class ChurchDetailView(DetailView):
@@ -33,21 +59,37 @@ class ChurchDetailView(DetailView):
 
 
 class ChurchCreateView( CreateView):
-    model = Church
-    form_class = ChurchForm
-    template_name = 'church_form.html'
-    success_url = reverse_lazy('church_list')
+   model = Church
+   form_class = ChurchForm
+   template_name = 'church_form.html'
+   success_url = reverse_lazy('church_list')
 
-class ChurchUpdateView(LoginRequiredMixin, UpdateView):
-    model = Church
-    form_class = ChurchForm
-    template_name = 'church_form.html'
-    success_url = reverse_lazy('church_list')
+#edit church
+class EditChurchView( UpdateView):  # Use View class for class-based views
+    def get(self, request, pk):
+        church = get_object_or_404(Church, pk=pk)
+        form = ChurchForm(instance=church)
+        return render(request, 'church_form.html', {'form': form})
 
-class ChurchDeleteView(LoginRequiredMixin, DeleteView):
-    model = Church
-    template_name = 'church_confirm_delete.html'
-    success_url = reverse_lazy('church_list')
+    def post(self, request, pk):
+        church = get_object_or_404(Church, pk=pk)
+        form = ChurchForm(request.POST, instance=church)
+        if form.is_valid():
+            form.save()
+            return redirect('church_list')  # Redirect to the church list after updating
+        return render(request, 'church_form.html', {'form': form})
+
+
+#class ChurchUpdateView(LoginRequiredMixin, UpdateView):
+  #  model = Church
+  #  form_class = ChurchForm
+   # template_name = 'church_form.html'
+   # success_url = reverse_lazy('church_list')
+
+#class ChurchDeleteView(LoginRequiredMixin, DeleteView):
+  #  model = Church
+    #template_name = 'church_confirm_delete.html'
+    #success_url = reverse_lazy('church_list')
 
 class ContributionListView(ListView):
     model = Contribution
@@ -202,3 +244,7 @@ def edit_church(request, pk):
 
     # Render the form template with the form context
     return render(request, 'church_form.html', {'form': form})
+
+
+
+

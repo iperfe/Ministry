@@ -1,7 +1,9 @@
-{% extends 'base.html' %} {% block content %}
+ {% extends 'base.html' %} {% block content %}
 <h2>{% if form.instance.pk %}Update{% else %}Create{% endif %} Church</h2>
+
 <form method="POST">
     {% csrf_token %} {{ form.as_p }}
     <button type="submit">Save</button>
 </form>
+
 {% endblock %}

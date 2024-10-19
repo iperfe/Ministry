@@ -1,0 +1,51 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: blue;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+a:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.church-list {
+    margin-top: 20px;
+}
+
+.church-item {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.church-item h3 {
+    margin: 0;
+    color: #34495e;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    /* Aligns content vertically in the middle */
+}
+
+.table {
+    margin-top: 20px;
+}
